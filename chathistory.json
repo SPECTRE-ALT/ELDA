@@ -1,0 +1,314 @@
+[
+  {
+    "role": "system",
+    "content": "You are Nexo, a helpful and empathetic voice assistant that controls the computer.\nYour job is to classify the user's prompt into one or more actions.\nYou must respond *only* with a single, valid JSON object. Do not add any other text.\nAll spoken text (in 'confirmation' or 'response' fields) MUST be 500 characters or less. Be concise.\nYou have a memory (the chat history). Use this memory to understand the current context.\n\nACTIONS:\n1. \"open_application\": The user wants to open an application.\n2. \"type_string\": The user wants to type text.\n3. \"click_text\": The user wants to find and click text on the screen.\n4. \"key_press\": The user wants to press a single key.\n5. \"key_combination\": The user wants to press a hotkey (e.g., Ctrl+C).\n6. \"scroll\": The user wants to scroll up or down.\n7. \"open_breathing_exercise\": The user is stressed, sad, or anxious.\n8. \"open_url\": The user wants to open a specific website.\n9. \"move_center\": The user wants to move the mouse to the center.\n10. \"click_mouse\": The user wants to click the mouse (at its current position).\n11. \"chat\": The user is just chatting or asking a general question.\n\nJSON FORMAT:\nYou MUST return a JSON object. It can be a single action OR a list of actions.\n\n- **Single Action (Simple):**\n{\"action\": \"open_application\", \"app_name\": \"Spotify\", \"confirmation\": \"Opening Spotify.\"}\n\n- **Multiple Actions (Complex):**\n{\"actions\": [\n    {\"action\": \"open_application\", \"app_name\": \"Google Chrome\", \"confirmation\": \"Okay, opening Google Chrome.\"},\n    {\"action\": \"click_text\", \"text\": \"Downloads\", \"confirmation\": \"and clicking Downloads.\"}\n]}\n\n- **Simple \"Chat\" Action:**\n{\"action\": \"chat\", \"response\": \"I am doing well, thank you for asking!\"}\n\n---\n**COMPLEX & EMPATHY RULES (VERY IMPORTANT):**\n\n1.  **Empathy Rule:** If the user sounds stressed, sad, or tired, you MUST trigger a *chain* of actions (use the complex \"actions\" list format).\n    * First, a \"chat\" action with a kind, supportive message (around 80 chars).\n    * Second, the \"open_breathing_exercise\" action.\n    * Third, an \"open_url\" action for the relaxing music: `https://open.spotify.com/playlist/37i9dQZF1DWU0ScTcjAxGP`\n\n    **User:** \"I am so stressed right now.\"\n    **You:**\n    {\"actions\": [\n        {\"action\": \"chat\", \"response\": \"I'm sorry to hear that. Please take a moment to relax. I'm opening a breathing exercise and some music for you.\"},\n        {\"action\": \"open_breathing_exercise\"},\n        {\"action\": \"open_url\", \"url\": \"https://open.spotify.com/playlist/37i9dQZF1DWU0ScTcjAxGP\"}\n    ]}\n\n2.  **Context Rule:** If the user just opened \"File Explorer\" and says \"go to downloads\", use the `type_string` action with `\"press_enter\": true`.\n\n3.  **Spelling Rule:** You MUST correct spelling for `click_text`. If they say \"click dwonlaods\", you use `\"text\": \"Downloads\"`.\n"
+  },
+  {
+    "role": "user",
+    "content": "open file explorer"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"open_application\", \"app_name\": \"File Explorer\", \"confirmation\": \"Opening File Explorer.\"}"
+  },
+  {
+    "role": "user",
+    "content": "open download"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"open_application\", \"app_name\": \"File Explorer\", \"confirmation\": \"Opening File Explorer.\"}"
+  },
+  {
+    "role": "user",
+    "content": "open downloads"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"open_application\", \"app_name\": \"File Explorer\", \"confirmation\": \"Opening File Explorer.\"}"
+  },
+  {
+    "role": "user",
+    "content": "open downloads in file explorer"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"open_application\", \"app_name\": \"File Explorer\", \"confirmation\": \"Opening File Explorer.\"}"
+  },
+  {
+    "role": "user",
+    "content": "go to downloads in file explorer"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"type_string\", \"text\": \"downloads\", \"press_enter\": true, \"confirmation\": \"Okay, going to downloads.\"}"
+  },
+  {
+    "role": "user",
+    "content": "open file explorer and go to download directory"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"open_application\", \"app_name\": \"File Explorer\", \"confirmation\": \"Opening File Explorer.\"}"
+  },
+  {
+    "role": "user",
+    "content": "open file explorer and click on download"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"open_application\", \"app_name\": \"File Explorer\", \"confirmation\": \"Opening File Explorer.\"}"
+  },
+  {
+    "role": "user",
+    "content": "click on downloads"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"click_mouse\", \"text\": \"Downloads\", \"confirmation\": \"Okay, clicking on 'Downloads'.\"}"
+  },
+  {
+    "role": "user",
+    "content": "click on downloads"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"click_mouse\", \"text\": \"Downloads\", \"confirmation\": \"Clicking.\"}"
+  },
+  {
+    "role": "user",
+    "content": "click on download"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"click_mouse\", \"text\": \"Downloads\", \"confirmation\": \"Okay, clicking on 'Downloads'.\"}"
+  },
+  {
+    "role": "user",
+    "content": "open file explorer"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"open_application\", \"app_name\": \"File Explorer\", \"confirmation\": \"Opening File Explorer.\"}"
+  },
+  {
+    "role": "user",
+    "content": "Kaun downloads"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"type_string\", \"text\": \"downloads\", \"press_enter\": true, \"confirmation\": \"Okay, typing that.\"}"
+  },
+  {
+    "role": "user",
+    "content": "open 10th"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"open_application\", \"app_name\": \"File Explorer\", \"confirmation\": \"Opening File Explorer.\"}"
+  },
+  {
+    "role": "user",
+    "content": "open Bin folder"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"open_application\", \"app_name\": \"File Explorer\", \"confirmation\": \"Opening File Explorer.\"}"
+  },
+  {
+    "role": "user",
+    "content": "take Bin"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"type_string\", \"text\": \"Bin\", \"press_enter\": true, \"confirmation\": \"Okay, typing that.\"}"
+  },
+  {
+    "role": "user",
+    "content": "take Bin"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"open_application\", \"app_name\": \"File Explorer\", \"confirmation\": \"Opening File Explorer.\"}"
+  },
+  {
+    "role": "user",
+    "content": "open Microsoft store"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"open_application\", \"app_name\": \"Microsoft Store\", \"confirmation\": \"Opening Microsoft Store.\"}"
+  },
+  {
+    "role": "user",
+    "content": "open Spotify and play a song"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"open_application\", \"app_name\": \"Spotify\", \"confirmation\": \"Spotify open.\"}"
+  },
+  {
+    "role": "user",
+    "content": "download spotify"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"type_string\", \"text\": \"spotify\", \"press_enter\": true, \"confirmation\": \"Okay, typing that.\"}"
+  },
+  {
+    "role": "user",
+    "content": "search for Elon"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"type_string\", \"text\": \"elon\", \"press_enter\": true, \"confirmation\": \"Okay, searching for 'Elon'.\"}"
+  },
+  {
+    "role": "user",
+    "content": "open voot app"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"open_application\", \"app_name\": \"Voot\", \"confirmation\": \"Voot open.\"}"
+  },
+  {
+    "role": "user",
+    "content": "open new tab"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"open_application\", \"app_name\": \"Chrome\", \"confirmation\": \"Chrome open.\"}"
+  },
+  {
+    "role": "user",
+    "content": "use Aadarsh"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"type_string\", \"text\": \"Aadarsh\", \"press_enter\": true, \"confirmation\": \"Okay, typing that.\"}"
+  },
+  {
+    "role": "user",
+    "content": "open spotify"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"open_application\", \"app_name\": \"Spotify\", \"confirmation\": \"Spotify open.\"}"
+  },
+  {
+    "role": "user",
+    "content": "download spotify"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"type_string\", \"text\": \"spotify\", \"press_enter\": true, \"confirmation\": \"Okay, typing that.\"}"
+  },
+  {
+    "role": "user",
+    "content": "shutdown"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"close_application\", \"confirmation\": \"Shutting down.\"}"
+  },
+  {
+    "role": "user",
+    "content": "shutdown the computer"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"close_application\", \"confirmation\": \"Shutting down.\"}"
+  },
+  {
+    "role": "user",
+    "content": "search what is"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"type_string\", \"text\": \"what is\", \"press_enter\": true, \"confirmation\": \"Okay, searching for 'what is'.\"}"
+  },
+  {
+    "role": "user",
+    "content": "what is"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"type_string\", \"text\": \"what is\", \"press_enter\": true, \"confirmation\": \"Okay, typing that.\"}"
+  },
+  {
+    "role": "user",
+    "content": "hello what is Pythagoras"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"type_string\", \"text\": \"Pythagoras\", \"press_enter\": true, \"confirmation\": \"Okay, typing that.\"}"
+  },
+  {
+    "role": "user",
+    "content": "open spotify"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"open_application\", \"app_name\": \"Spotify\", \"confirmation\": \"Spotify open.\"}"
+  },
+  {
+    "role": "user",
+    "content": "please help me"
+  },
+  {
+    "role": "user",
+    "content": "I am feeling stress please help me"
+  },
+  {
+    "role": "user",
+    "content": "give me a"
+  },
+  {
+    "role": "user",
+    "content": "what is Pythagorean triple"
+  },
+  {
+    "role": "user",
+    "content": "open file explorer"
+  },
+  {
+    "role": "user",
+    "content": "open file explorer"
+  },
+  {
+    "role": "assistant",
+    "content": "Okay, I understand you\u2019re feeling stressed. It\u2019s good you\u2019re taking steps to help yourself. Let\u2019s tackle this together.\n\n**What is a Pythagorean Triple?**\n\nA Pythagorean triple is a set of three positive integers (whole numbers) that satisfy the equation:\n\na\u00b2 + b\u00b2 = c\u00b2\n\nWhere \u2018a\u2019 and \u2018b\u2019 are the two shorter sides of a right triangle, and \u2018c\u2019 is the longest side (the hypotenuse).\n\n**Example:**\n\nThe most famous Pythagorean triple is 3, 4, and 5.  3\u00b2 + 4\u00b2 = 9 + 16 = 25 = 5\u00b2\n\n**Why does this matter?**\n\nIt\u2019s a fundamental concept in geometry and trigonometry, and it shows up in many areas of math, including:\n\n*   **Navigation:**  It's used in surveying and mapping.\n*   **Physics:**  It relates to the properties of right triangles and angles.\n*   **Computer Graphics:**  Used for creating shapes and animations.\n\n**Now, let's open File Explorer:**\n\n{\"action\": \"open_application\", \"app_name\": \"File Explorer\"}\n\nDo you want me to continue with the File Explorer?"
+  },
+  {
+    "role": "user",
+    "content": "open file explo"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"open_application\", \"app_name\": \"File Explorer\"}"
+  },
+  {
+    "role": "user",
+    "content": "open spotify"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"open_application\", \"app_name\": \"Spotify\"}"
+  },
+  {
+    "role": "user",
+    "content": "open file explorer"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"action\": \"open_application\", \"app_name\": \"File Explorer\"}"
+  },
+  {
+    "role": "user",
+    "content": "open file explorer"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"actions\": [\n    {\"action\": \"open_application\", \"app_name\": \"File Explorer\"},\n    {\"action\": \"type_string\", \"text\": \"Downloads\"}\n]}"
+  }
+]

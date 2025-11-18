@@ -1,0 +1,12 @@
+{
+    "stress_events": [
+        {
+            "timestamp": "2025-11-17T12:56:42.987482",
+            "stress_level": "High Stress",
+            "blink_rate": 1,
+            "date": "2025-11-17",
+            "time": "12:56:42",
+            "detection_method": "Blink Rate Analysis"
+        }
+    ]
+}
